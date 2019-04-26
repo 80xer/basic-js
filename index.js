@@ -11,4 +11,20 @@
   });
 })();
 
-console.log('안녕하세요.');
+function getKewyord(referrerHost, Referrer) {
+  if (
+    referrerHost === 'search.naver.com' ||
+    referrerHost === 'm.search.naver.com'
+  ) {
+    const pattern = new RegExp('[\\?&]query=([^&#]*)');
+    const query = Referrer.match(pattern);
+    const keyword = query[1].replace(/\+/gi, '%20');
+    return decodeURI(keyword);
+  }
+}
+
+const keyword = getKewyord(
+  'search.naver.com',
+  'https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=자바스크립트'
+);
+console.log('keyword', keyword);
